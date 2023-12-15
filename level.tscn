@@ -1,0 +1,73 @@
+[gd_scene load_steps=6 format=3 uid="uid://cx6obfo7g3o2b"]
+
+[ext_resource type="Script" path="res://level.gd" id="1_7d0xg"]
+[ext_resource type="PackedScene" uid="uid://xvnx1nifvljx" path="res://player.tscn" id="1_wd7a6"]
+[ext_resource type="PackedScene" uid="uid://civqixw6pc8pa" path="res://wall.tscn" id="2_fy5p7"]
+[ext_resource type="PackedScene" uid="uid://dqs21knjvmxph" path="res://side_wall.tscn" id="5_8n3i4"]
+[ext_resource type="PackedScene" uid="uid://cwfetskvmypfl" path="res://ball_char.tscn" id="6_mpaos"]
+
+[node name="Level" type="Node2D"]
+script = ExtResource("1_7d0xg")
+
+[node name="LeftLabel" type="Label" parent="."]
+offset_left = 559.0
+offset_top = 204.0
+offset_right = 632.0
+offset_bottom = 382.0
+theme_override_font_sizes/font_size = 128
+text = "0"
+
+[node name="RightLabel" type="Label" parent="."]
+offset_left = 1331.0
+offset_top = 204.0
+offset_right = 1404.0
+offset_bottom = 382.0
+theme_override_font_sizes/font_size = 128
+text = "0"
+
+[node name="TopWall" parent="." instance=ExtResource("2_fy5p7")]
+collision_layer = 1
+collision_mask = 6
+
+[node name="BottomWall" parent="." instance=ExtResource("2_fy5p7")]
+position = Vector2(24, 1112)
+collision_layer = 1
+collision_mask = 6
+
+[node name="LeftWall" parent="." instance=ExtResource("5_8n3i4")]
+position = Vector2(61, 128)
+collision_mask = 6
+
+[node name="CollisionShape2D" parent="LeftWall" index="0"]
+position = Vector2(-137, 448)
+
+[node name="RightWall" parent="." instance=ExtResource("5_8n3i4")]
+position = Vector2(2072, 90)
+collision_mask = 6
+
+[node name="CollisionShape2D" parent="RightWall" index="0"]
+position = Vector2(-78, 451)
+
+[node name="LeftPlayer" parent="." instance=ExtResource("1_wd7a6")]
+position = Vector2(278, 518)
+collision_layer = 2
+collision_mask = 5
+
+[node name="RightPlayer" parent="." instance=ExtResource("1_wd7a6")]
+position = Vector2(1632, 518)
+collision_layer = 2
+collision_mask = 5
+side = "right"
+
+[node name="Ball" parent="." instance=ExtResource("6_mpaos")]
+position = Vector2(1024, 520)
+collision_layer = 4
+collision_mask = 3
+
+[connection signal="body_entered" from="LeftWall" to="." method="_on_left_wall_body_entered"]
+[connection signal="body_entered" from="RightWall" to="." method="_on_right_wall_body_entered"]
+
+[editable path="LeftWall"]
+[editable path="RightWall"]
+[editable path="LeftPlayer"]
+[editable path="RightPlayer"]
